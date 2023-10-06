@@ -13,14 +13,15 @@ import java.util.List;
 import java.lang.String;
 
 public class AdapterDemo extends FragmentStateAdapter {
-private static List<Zametka> zametki = new ArrayList<>();
+private static List<DemoFragment> zametki = new ArrayList<>();
 
 public static void  addZametki(String name, String text){
     Zametka zametka = new Zametka(name, text);
-    zametki.add(zametka);
+    DemoFragment demoFragment = new DemoFragment(zametka);
+    zametki.add(demoFragment);
 }
     public static String getZametkiTitle(int position){
-        return zametki.get(position).name;
+        return zametki.get(position).zametka.name;
     }
     public static int getZametkiLength(){
         return zametki.size();
@@ -36,9 +37,10 @@ public static void  addZametki(String name, String text){
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        Fragment fragment = new DemoFragment(zametki.get(position));
+        Fragment fragment = zametki.get(position);
         return fragment;
     }
+
 
     @Override
     public int getItemCount() {
