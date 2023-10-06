@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.ContentInfo;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -25,11 +26,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dbAdapter = new DBAdapter(this);
         setContentView(R.layout.activity_main);
         if(context == null){
             context = getApplicationContext();
         }
-        dbAdapter = new DBAdapter(this);
         Button button = findViewById(R.id.button);
         Button delete = findViewById(R.id.buttondelete);
         if(AdapterDemo.getZametkiLength() == 0)
@@ -54,8 +55,16 @@ public class MainActivity extends AppCompatActivity {
         });
 
         delete.setOnClickListener(v -> {
-            AdapterDemo.removeZametka(viewPager2.getCurrentItem());
-            adapterDemo.notifyDataSetChanged();
+            if(AdapterDemo.getZametkiLength() == 0)
+                Toast.makeText(this, "Stop",Toast.LENGTH_SHORT).show();
+            else {
+                dbAdapter.deleteOne(AdapterDemo.getZametkiTitle(viewPager2.getCurrentItem()));
+                AdapterDemo.destroyZametki();
+                dbAdapter.getAll();
+                Intent intent = new Intent(this, mybad.class);
+                startActivity(intent);
+                finish();
+            }
         });
     }
 }

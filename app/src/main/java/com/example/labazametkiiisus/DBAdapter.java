@@ -56,4 +56,10 @@ public class DBAdapter extends SQLiteOpenHelper {
         }
         db.close();
     }
+
+    public void deleteOne(String name){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(MY_TABLE, COLUMN_NAME + "= " +"'" +AdapterDemo.getZametka(name)+"'",null );
+        db.close();
+    }
 }
