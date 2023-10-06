@@ -16,28 +16,20 @@ import android.widget.Toast;
 
 public class DemoFragment extends Fragment {
 
-    public static final String TITLE = "title";
 
+    Zametka zametka;
 
-    public static DemoFragment getNewInstance(String position){
-        DemoFragment pageFragment = new DemoFragment();
-        Bundle args = new Bundle();
-        args.putString(TITLE, position);
-        pageFragment.setArguments(args);
-        return pageFragment;
+    public DemoFragment(Zametka z) {
+        this.zametka = z;
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_demo, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        ((TextView)view.findViewById(R.id.textView)).setText(getArguments().getString(TITLE));
+        View view =  inflater.inflate(R.layout.fragment_demo, container, false);
+        TextView text = view.findViewById(R.id.textView);
+        text.setText(zametka.text);
+        return view;
     }
 }

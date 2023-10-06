@@ -36,10 +36,7 @@ public static void  addZametki(String name, String text){
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        Fragment fragment = new DemoFragment();
-        Bundle args = new Bundle();
-        args.putString(DemoFragment.TITLE, zametki.get(position).text);
-        fragment.setArguments(args);
+        Fragment fragment = new DemoFragment(zametki.get(position));
         return fragment;
     }
 
